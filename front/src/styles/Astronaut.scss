@@ -1,0 +1,23 @@
+.Astronaut {
+    display: flex;
+    align-items: center;
+    height: 6rem;
+    background: var(--eleven-labs-ligth-blue);
+    border-radius: 6px;
+    padding: 1rem;
+    color: white;
+
+    .picture {
+        width: 6rem;
+        height: 6rem;
+        border-radius: 100%;
+        background: #95bcff;
+        overflow: hidden;
+
+        .img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+}
