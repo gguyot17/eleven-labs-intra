@@ -14,14 +14,17 @@ const getAstronauts = async (req, res) => {
 };
 
 const getAstronaut = async (req, res) => {
-  const user = await getUser({ id: req.params.id });
-  if (user) {
-    res.json(user);
-  } else {
-    res.json({
-      status: false,
-      message: "user doesn't exist",
-    });
+  try {
+    const id = req.params.id;
+
+    let astronaut = await Astronaut.findOne({ _id: id });
+
+    console.log(astronaut);
+
+    res.status(200).json(astronaut);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
   }
 };
 
@@ -38,4 +41,42 @@ const addAstronaut = async (req, res) => {
   }
 };
 
-module.exports = { getAstronauts, getAstronaut, addAstronaut };
+const updateAstronaut = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { firstName, lastName } = req.body;
+
+    let astronaut = await Astronaut.updateOne(
+      { _id: id },
+      { $set: { firstName: firstName, lastName: lastName } }
+    );
+
+    console.log(astronaut);
+
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+};
+
+const deleteAstronaut = async (req, res) => {
+  try {
+    const id = req.params.id;
+    let astronaut = await Astronaut.deleteOne({ _id: id });
+
+    console.log(astronaut);
+
+    res.sendStatus(200);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+module.exports = {
+  getAstronauts,
+  getAstronaut,
+  addAstronaut,
+  updateAstronaut,
+  deleteAstronaut,
+};

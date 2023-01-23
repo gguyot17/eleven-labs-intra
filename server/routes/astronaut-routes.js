@@ -9,6 +9,6 @@ module.exports = function (app) {
   app.get("/astronauts", controller.getAstronauts);
   app.get("/astronauts/:id", controller.getAstronaut);
   app.post("/astronauts", controller.addAstronaut);
-  app.put("/astronauts/:id");
-  app.delete("/astronauts/:id");
+  app.put("/astronauts/:id", controller.updateAstronaut);
+  app.delete("/astronauts/:id", controller.deleteAstronaut);
 };
