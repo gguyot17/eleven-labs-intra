@@ -30,12 +30,14 @@
         text-align: center;
         flex-grow: 1;
         font-size: 1.7rem;
-        font-weight: bold;
+        font-weight: 600;
         white-space: nowrap;
         overflow: hidden;
         width: 50%;
         text-overflow: ellipsis;
         padding: 0 1rem;
+        flex-direction: column;
+        justify-content: center;
 
         &.input {
             text-overflow: unset;
@@ -51,7 +53,8 @@
         border: 0;
         padding: 0.5rem;
         border-radius: 4px;
-        width: 6rem;
+        min-width: 6rem;
+        width: 60%;
     }
 
     .options-block {

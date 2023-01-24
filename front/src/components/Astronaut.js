@@ -22,9 +22,18 @@ function Astronaut(props) {
   }
 
   function validateInput() {
-    if (isChange) {
+    const regex = /^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/;
+    if (
+      isChange &&
+      regex.test(inputValue.firstName) &&
+      regex.test(inputValue.lastName)
+    ) {
       props.updateAstronaut(astronaut._id, inputValue);
       setIsChange(false);
+    } else {
+      alert(
+        "Veuillez entrer un prénom et un nom valide ( minimum trois lettres )"
+      );
     }
   }
 
@@ -39,12 +48,14 @@ function Astronaut(props) {
           <input
             type="text"
             name="firstName"
+            placeholder="Prénom"
             value={inputValue.firstName}
             onChange={handleChange}
           ></input>
           <input
             type="text"
             name="lastName"
+            placeholder="Nom"
             value={inputValue.lastName}
             onChange={handleChange}
           ></input>
