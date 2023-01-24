@@ -3,6 +3,7 @@ import Astronaut from "./Astronaut";
 import { useState, useEffect } from "react";
 import user from "../assets/user.svg";
 import check from "../assets/check.svg";
+import * as astronautService from "../services/astronaut.service";
 
 function App() {
   const [astronauts, setAstronauts] = useState([]);
@@ -25,7 +26,11 @@ function App() {
   function validateInput() {
     const regex = /^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/;
     if (regex.test(inputValue.firstName) && regex.test(inputValue.lastName)) {
-      addAstronaut(inputValue);
+      setReload(false);
+      astronautService.addAstronaut(inputValue).then(() => {
+        setReload(true);
+      });
+
       setInputValue({
         firstName: "",
         lastName: "",
@@ -39,60 +44,25 @@ function App() {
 
   // const test = prompt("qdqdqw", "dqwd");
 
-  function addAstronaut(payload) {
+  function handleUpdateAstronaut(id, payload) {
     setReload(false);
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    };
-    fetch("http://localhost:8080/astronauts", requestOptions)
-      .then(() => {
-        setReload(true);
-      })
-      .catch((e) => console.log(e));
+    astronautService.updateAstronaut(id, payload).then((data) => {
+      setReload(true);
+    });
   }
 
-  function updateAstronaut(id, payload) {
+  function handleDeleteAstronaut(id) {
     setReload(false);
-    const requestOptions = {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    };
-    fetch("http://localhost:8080/astronauts/" + id, requestOptions)
-      .then((data) => {
-        console.log(data);
-        setReload(true);
-      })
-      .catch((e) => console.log(e));
-  }
-
-  function deleteAstronaut(id) {
-    setReload(false);
-    const requestOptions = {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-    };
-    fetch("http://localhost:8080/astronauts/" + id, requestOptions)
-      .then((data) => {
-        console.log(data, reloadAstronauts);
-        setReload(true);
-        console.log(reloadAstronauts);
-      })
-      .catch((e) => console.log(e));
+    astronautService.deleteAstronaut(id).then((data) => {
+      setReload(true);
+    });
   }
 
   useEffect(() => {
-    const requestOptions = {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    };
     console.log("GET");
-    fetch("http://localhost:8080/astronauts", requestOptions)
-      .then((response) => response.json())
-      .then((data) => setAstronauts(data))
-      .catch((e) => console.log(e));
+    astronautService.getAstronauts().then((data) => {
+      setAstronauts(data);
+    });
   }, [reloadAstronauts]);
 
   return (
@@ -129,8 +99,8 @@ function App() {
             <Astronaut
               key={astronaut._id}
               astronaut={astronaut}
-              updateAstronaut={updateAstronaut}
-              deleteAstronaut={deleteAstronaut}
+              updateAstronaut={handleUpdateAstronaut}
+              deleteAstronaut={handleDeleteAstronaut}
             ></Astronaut>
           );
         })}

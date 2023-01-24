@@ -4,8 +4,6 @@ const getAstronauts = async (req, res) => {
   try {
     let astronauts = await Astronaut.find();
 
-    console.log(astronauts);
-
     res.status(200).json(astronauts);
   } catch (error) {
     console.log(error);
@@ -18,8 +16,6 @@ const getAstronaut = async (req, res) => {
     const id = req.params.id;
 
     let astronaut = await Astronaut.findOne({ _id: id });
-
-    console.log(astronaut);
 
     res.status(200).json(astronaut);
   } catch (error) {
@@ -51,8 +47,6 @@ const updateAstronaut = async (req, res) => {
       { $set: { firstName: firstName, lastName: lastName } }
     );
 
-    console.log(astronaut);
-
     res.sendStatus(200);
   } catch (error) {
     console.log(error);
@@ -64,8 +58,6 @@ const deleteAstronaut = async (req, res) => {
   try {
     const id = req.params.id;
     let astronaut = await Astronaut.deleteOne({ _id: id });
-
-    console.log(astronaut);
 
     res.sendStatus(200);
   } catch (error) {
