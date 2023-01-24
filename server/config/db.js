@@ -1,5 +1,5 @@
 module.exports = {
-  HOST: "127.0.0.1",
+  HOST: "host.docker.internal",
   PORT: 27017,
   DB: "eleven-labs-intra",
 };

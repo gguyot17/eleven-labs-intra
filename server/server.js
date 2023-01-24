@@ -16,6 +16,7 @@ db.mongoose
     console.log("Successfully connect to MongoDB.");
   })
   .catch((err) => {
+    console.log(err);
     process.exit();
   });
 

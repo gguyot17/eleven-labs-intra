@@ -59,7 +59,6 @@ function App() {
   }
 
   useEffect(() => {
-    console.log("GET");
     astronautService.getAstronauts().then((data) => {
       setAstronauts(data);
     });
